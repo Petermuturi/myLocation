@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
+import moment from 'moment'
 
 export default class GeoLocation extends Component {
 	constructor(props) {
@@ -28,7 +29,6 @@ export default class GeoLocation extends Component {
 
 
   render() {
-    console.log(this.state)
     return (
       <View>
         {
@@ -38,11 +38,24 @@ export default class GeoLocation extends Component {
           </Text>
           :
           <View>
-            <Text>
+            <Text style={styles.coord}>
               Latitude: {this.state.userPosition.coords.latitude}
             </Text>
-            <Text>
+            <Text style={styles.coord}>
               Longitude: {this.state.userPosition.coords.longitude}
+            </Text>
+            {
+              this.state.userPosition.mocked ?
+              <Text>
+                These coordinates were mocked
+              </Text>
+              :
+              <Text>
+                These coordinates weren't mocked
+              </Text>
+            }
+            <Text>
+              Time: {moment(new Date(this.state.userPosition.timestamp)).format('MMM Do YYYY h:mm:ss a')}
             </Text>
           </View>
         } 
@@ -53,5 +66,7 @@ export default class GeoLocation extends Component {
 }
 
 var styles = StyleSheet.create({
-  
+  coord: {
+    fontSize:20,
+  }
 });
