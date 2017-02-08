@@ -1,11 +1,6 @@
 
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { AppRegistry, StyleSheet, Text, View, Image } from 'react-native';
 
 import GeoLocation from './components/GeoLocation'
 
@@ -13,7 +8,10 @@ export default class myLocation extends Component {
   render() {
     return (
       <View style={styles.container}>
-         <Text style={styles.title}>User's position</Text>
+        <Image
+          source={require('./assets/icon.png')}
+        />
+         <Text style={styles.title}>My Location</Text>
         <GeoLocation/>
       </View>
     );
@@ -29,7 +27,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: '100',
-    fontSize: 40
+    fontSize: 60
   }
 });
 

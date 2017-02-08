@@ -33,30 +33,30 @@ export default class GeoLocation extends Component {
       <View>
         {
           Object.keys(this.state.userPosition).length === 0 ?
-          <Text>
-            Loading ...
+          <Text style={styles.load}>
+            Fetching location, please wait...
           </Text>
           :
           <View>
             <Text style={styles.coord}>
-              Latitude: {this.state.userPosition.coords.latitude}
+              Longitude: {this.state.userPosition.coords.longitude}
             </Text>
             <Text style={styles.coord}>
-              Longitude: {this.state.userPosition.coords.longitude}
+              Latitude: {this.state.userPosition.coords.latitude}
+            </Text>
+            <Text style={styles.time}>
+              Time: {moment(new Date(this.state.userPosition.timestamp)).format('MMM Do YYYY h:mm:ss a')}
             </Text>
             {
               this.state.userPosition.mocked ?
-              <Text>
+              <Text style={styles.mock}>
                 These coordinates were mocked
               </Text>
               :
-              <Text>
+              <Text style={styles.mock}>
                 These coordinates weren't mocked
               </Text>
             }
-            <Text>
-              Time: {moment(new Date(this.state.userPosition.timestamp)).format('MMM Do YYYY h:mm:ss a')}
-            </Text>
           </View>
         } 
 
@@ -66,7 +66,19 @@ export default class GeoLocation extends Component {
 }
 
 var styles = StyleSheet.create({
+  load: {
+    fontSize: 18
+  },
   coord: {
-    fontSize:20,
+    textAlign:'center',
+    fontSize:25,
+  },
+  time: {
+    textAlign:'center',
+    fontWeight: '400'
+  },
+  mock: {
+    fontSize:12,
+    textAlign:'center'
   }
 });
