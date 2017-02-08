@@ -17,6 +17,13 @@ export default class GeoLocation extends Component {
 
 
 	componentDidMount() {
+     navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({userPosition: position, geo: true});
+      },
+      (error) => alert (JSON.stringify(error)),
+        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      );
 		 this.watchID = navigator.geolocation.watchPosition((position) => {
       this.setState({ userPosition: position, geo: true });
     });
