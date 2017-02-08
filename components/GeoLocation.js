@@ -8,7 +8,7 @@ export default class GeoLocation extends Component {
 	constructor(props) {
     super(props);
     this.state = {
-    		userPosition: 'loading...',
+    		userPosition: {},
     		geo: false
     }
   	watchID: (null: ?number)
@@ -17,8 +17,7 @@ export default class GeoLocation extends Component {
 
 	componentDidMount() {
 		 this.watchID = navigator.geolocation.watchPosition((position) => {
-      var lastPosition = JSON.stringify(position);
-      this.setState({userPosition: lastPosition, geo: true});
+      this.setState({ userPosition: position, geo: true });
     });
 
 	}
@@ -29,19 +28,30 @@ export default class GeoLocation extends Component {
 
 
   render() {
+    console.log(this.state)
     return (
-      <View>	
-      	<Text>
-          <Text style={styles.title}>User's position:  </Text>
-          {this.state.userPosition}
-        </Text>
+      <View>
+        {
+          Object.keys(this.state.userPosition).length === 0 ?
+          <Text>
+            Loading ...
+          </Text>
+          :
+          <View>
+            <Text>
+              Latitude: {this.state.userPosition.coords.latitude}
+            </Text>
+            <Text>
+              Longitude: {this.state.userPosition.coords.longitude}
+            </Text>
+          </View>
+        } 
+
       </View>
     );
   }
 }
 
 var styles = StyleSheet.create({
-  title: {
-    fontWeight: '500',
-  },
+  
 });

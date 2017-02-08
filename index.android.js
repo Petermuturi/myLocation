@@ -13,6 +13,7 @@ export default class myLocation extends Component {
   render() {
     return (
       <View style={styles.container}>
+         <Text style={styles.title}>User's position</Text>
         <GeoLocation/>
       </View>
     );
@@ -24,7 +25,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#eee',
+  },
+  title: {
+    fontWeight: '100',
+    fontSize: 40
   }
 });
 
