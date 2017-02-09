@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ToastAndroid, TouchableHighlight } from 'react-native';
 
 import moment from 'moment'
 
@@ -21,7 +21,7 @@ export default class GeoLocation extends Component {
       (position) => {
         this.setState({userPosition: position, geo: true});
       },
-      (error) => alert (JSON.stringify(error)),
+      (error) => ToastAndroid.show(JSON.stringify(error), ToastAndroid.SHORT),
         {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
       );
 		 this.watchID = navigator.geolocation.watchPosition((position) => {
@@ -29,6 +29,11 @@ export default class GeoLocation extends Component {
     });
 
 	}
+  onPressed(){
+     this.watchID = navigator.geolocation.watchPosition((position) => {
+      this.setState({ userPosition: position, geo: true });
+    });
+  }
 
 	componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchID);
@@ -40,9 +45,14 @@ export default class GeoLocation extends Component {
       <View>
         {
           Object.keys(this.state.userPosition).length === 0 ?
-          <Text style={styles.load}>
-            Fetching location, please wait...
-          </Text>
+          <View>
+            <Text style={styles.load}>
+              Ensure your cellular data or wifi is connected and your location is on
+            </Text>
+            <TouchableHighlight underlayColor="#dcdcdc" onPress={()=>this.onPressed()}>
+              <Text style={styles.button}>Refresh</Text>
+            </TouchableHighlight> 
+          </View>
           :
           <View>
             <Text style={styles.coord}>
@@ -65,7 +75,7 @@ export default class GeoLocation extends Component {
               </Text>
             }
           </View>
-        } 
+        }
 
       </View>
     );
@@ -74,7 +84,8 @@ export default class GeoLocation extends Component {
 
 var styles = StyleSheet.create({
   load: {
-    fontSize: 18
+    fontSize: 10,
+    marginBottom:40
   },
   coord: {
     textAlign:'center',
@@ -87,5 +98,13 @@ var styles = StyleSheet.create({
   mock: {
     fontSize:12,
     textAlign:'center'
+  },
+  button: {
+    borderColor: 'rgba(0,0,0,0.9)',
+    textAlign: 'center',
+    borderRadius: 5,
+    borderWidth:1,
+    paddingTop: 8,
+    paddingBottom: 8
   }
 });
